@@ -1,6 +1,7 @@
 import { HttpClient } from '@angular/common/http';
 import { Component, OnInit } from '@angular/core';
 import { ApiResponse, HttpServiceService } from '../http-service.service';
+import { environment } from 'src/environments/environment';
 
 export interface Student {
   name: string,
@@ -26,7 +27,7 @@ export interface Mentor {
 })
 
 export class DashboardComponent implements OnInit {
-  constructor(private httpService:HttpServiceService, private http:HttpClient) { }
+  constructor(private httpService: HttpServiceService, private http: HttpClient) { }
 
   mentorsTableData: Mentor[] = [];
   studentsTableData: Student[] = [];
@@ -45,13 +46,13 @@ export class DashboardComponent implements OnInit {
   }
 
   onStudentUpload(event: any) {
-    const file:File = event.target.files[0];
+    const file: File = event.target.files[0];
 
     if (file) {
       const formData = new FormData();
       formData.append("csv", file);
-      
-      const upload = this.http.post("/api/api/csv_actions?a=import", formData);
+
+      const upload = this.http.post(environment.API_URL + "/api/csv_actions?a=import", formData);
       upload.subscribe();
     }
 
@@ -59,13 +60,13 @@ export class DashboardComponent implements OnInit {
   }
 
   onMentorUpload(event: any) {
-    const file:File = event.target.files[0];
+    const file: File = event.target.files[0];
 
     if (file) {
       const formData = new FormData();
       formData.append("csv", file);
-      
-      const upload = this.http.post("/api/api/csv_actions?a=importmentors", formData);
+
+      const upload = this.http.post(environment.API_URL + "/api/csv_actions?a=importmentors", formData);
       upload.subscribe();
     }
 

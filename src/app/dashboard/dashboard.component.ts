@@ -58,7 +58,7 @@ export class DashboardComponent implements OnInit {
       upload.subscribe();
     }
 
-    location.reload();
+    alert('Please reload the page')
   }
 
   onMentorUpload(event: any) {
@@ -72,7 +72,7 @@ export class DashboardComponent implements OnInit {
       upload.subscribe();
     }
 
-    location.reload();
+    alert('Please reload the page')
   }
 
   selected = 0;

@@ -1,195 +1,195 @@
 <input type="file" #studentsUpload class="styled-fu" (change)="onStudentUpload($event)" accept=".csv">
 <input type="file" #mentorsUpload class="styled-fu" (change)="onMentorUpload($event)" accept=".csv">
 <div class="contentwrapper">
-    <mat-toolbar color="primary">
-        <span>Heads Up | Student-Mentor Pairing</span>
-        <div class="spacer"></div>
-        <button class="exportcsv" mat-raised-button color="accent" (click)="goToLink('localhost:3000/api/export_csv')">
-            <mat-icon>download</mat-icon>
-            Export Mastersheet .CSV
+  <mat-toolbar color="primary">
+    <span>Heads Up | Student-Mentor Pairing</span>
+    <div class="spacer"></div>
+    <button class="exportcsv" mat-raised-button color="accent" (click)="goToLink(downloadURL)">
+      <mat-icon>download</mat-icon>
+      Export Mastersheet .CSV
+    </button>
+    <button class="importcsv" mat-raised-button color="accent" (click)="studentsUpload.click()">
+      <mat-icon>publish</mat-icon>
+      Import .CSV
+    </button>
+  </mat-toolbar>
+  <mat-drawer-container>
+    <mat-drawer mode="side" opened>
+      <div class="navbarbuttonstack">
+        <button mat-button [color]="isShowingStudents ? 'primary': null" (click)="isShowingStudents = true">
+          <mat-icon>school</mat-icon>
+          Students
         </button>
-        <button class="importcsv" mat-raised-button color="accent" (click)="studentsUpload.click()">
+        <button mat-button [color]="!isShowingStudents ? 'primary': null" (click)="isShowingStudents = false">
+          <mat-icon>people_alt</mat-icon>
+          Mentors
+        </button>
+      </div>
+    </mat-drawer>
+    <mat-drawer-content>
+      <div [ngSwitch]="isShowingStudents">
+        <div *ngSwitchCase=false>
+          <button class="importcsv" mat-raised-button color="accent" (click)="mentorsUpload.click()">
             <mat-icon>publish</mat-icon>
-            Import .CSV
-        </button>
-    </mat-toolbar>
-    <mat-drawer-container>
-        <mat-drawer mode="side" opened>
-            <div class="navbarbuttonstack">
-                <button mat-button [color]="isShowingStudents ? 'primary': null" (click)="isShowingStudents = true">
-                    <mat-icon>school</mat-icon>
-                    Students
-                </button>
-                <button mat-button [color]="!isShowingStudents ? 'primary': null" (click)="isShowingStudents = false">
-                    <mat-icon>people_alt</mat-icon>
-                    Mentors
-                </button>
-            </div>
-        </mat-drawer>
-        <mat-drawer-content>
-            <div [ngSwitch]="isShowingStudents">
-                <div *ngSwitchCase=false>
-                    <button class="importcsv" mat-raised-button color="accent" (click)="mentorsUpload.click()">
-                        <mat-icon>publish</mat-icon>
-                        Import Mentors .CSV
-                    </button>
-                    <table mat-table [dataSource]="mentorsTableData" class="mat-elevation-z8">
-                        <!-- Position Column -->
-                        <ng-container matColumnDef="name">
-                          <th mat-header-cell *matHeaderCellDef>Name</th>
-                          <td mat-cell *matCellDef="let element"> {{element.name}} </td>
-                        </ng-container>
-                      
-                        <!-- Weight Column -->
-                        <ng-container matColumnDef="monday">
-                          <th mat-header-cell *matHeaderCellDef>Monday Times</th>
-                          <td mat-cell *matCellDef="let element">
-                            <div *ngIf="element.times[0] == undefined">
-                              N/A
-                            </div>
-                            <div *ngFor="let time of element.times[0] | keyvalue">
-                                {{ time.key }}
-                              </div>
-                          </td>
-                        </ng-container>
-                        <ng-container matColumnDef="tuesday">
-                          <th mat-header-cell *matHeaderCellDef>Tuesday Times</th>
-                          <td mat-cell *matCellDef="let element">
-                            <div *ngIf="element.times[1] == undefined">
-                              N/A
-                            </div>
-                            <div *ngFor="let time of element.times[1] | keyvalue">
-                                {{ time.key }}
-                              </div>
-                          </td>
-                        </ng-container>
-                        <ng-container matColumnDef="wednesday">
-                          <th mat-header-cell *matHeaderCellDef>Wednesday Times</th>
-                          <td mat-cell *matCellDef="let element">
-                            <div *ngIf="element.times[2] == undefined">
-                              N/A
-                            </div>
-                            <div *ngFor="let time of element.times[2] | keyvalue">
-                                {{ time.key }}
-                              </div>
-                          </td>
-                        </ng-container>
-                        <ng-container matColumnDef="thursday">
-                          <th mat-header-cell *matHeaderCellDef>Thursday Times</th>
-                          <td mat-cell *matCellDef="let element">
-                            <div *ngIf="element.times[3] == undefined">
-                              N/A
-                            </div>
-                            <div *ngFor="let time of element.times[3] | keyvalue">
-                                {{ time.key }}
-                              </div>
-                          </td>
-                        </ng-container>
-                        <ng-container matColumnDef="friday">
-                          <th mat-header-cell *matHeaderCellDef>Friday Times</th>
-                          <td mat-cell *matCellDef="let element">
-                            <div *ngIf="element.times[4] == undefined">
-                              N/A
-                            </div>
-                            <div *ngFor="let time of element.times[4] | keyvalue">
-                                {{ time.key }}
-                              </div>
-                          </td>
-                        </ng-container>
-                      
-                        <!-- Symbol Column -->
-                        <ng-container matColumnDef="subjects">
-                          <th mat-header-cell *matHeaderCellDef>Subjects</th>
-                          <td mat-cell *matCellDef="let element">
-                            <div *ngFor="let subject of element.subjects">
-                                {{ subject }}
-                              </div>
-                          </td>
-                        </ng-container>
-        
-                        <ng-container matColumnDef="students">
-                            <th mat-header-cell *matHeaderCellDef>Students</th>
-                            <td mat-cell *matCellDef="let element">
-                              <div *ngFor="let student of element.students">
-                                <div>
-                                  {{ student }}
-                                </div>
-                              </div>
-                            </td>
-                          </ng-container>
-                      
-                        <tr mat-header-row *matHeaderRowDef="displayedMentorColumns"></tr>
-                        <tr mat-row *matRowDef="let row; columns: displayedMentorColumns;"></tr>
-                      </table>
+            Import Mentors .CSV
+          </button>
+          <table mat-table [dataSource]="mentorsTableData" class="mat-elevation-z8">
+            <!-- Position Column -->
+            <ng-container matColumnDef="name">
+              <th mat-header-cell *matHeaderCellDef>Name</th>
+              <td mat-cell *matCellDef="let element"> {{element.name}} </td>
+            </ng-container>
+
+            <!-- Weight Column -->
+            <ng-container matColumnDef="monday">
+              <th mat-header-cell *matHeaderCellDef>Monday Times</th>
+              <td mat-cell *matCellDef="let element">
+                <div *ngIf="element.times[0] == undefined">
+                  N/A
                 </div>
-                <div *ngSwitchCase=true [ngSwitch]="selected">
-                    <div *ngSwitchCase=0>
-                        <table mat-table [dataSource]="studentsTableData" class="mat-elevation-z8">
-    
-                            <!--- Note that these columns can be defined in any order.
+                <div *ngFor="let time of element.times[0] | keyvalue">
+                  {{ time.key }}
+                </div>
+              </td>
+            </ng-container>
+            <ng-container matColumnDef="tuesday">
+              <th mat-header-cell *matHeaderCellDef>Tuesday Times</th>
+              <td mat-cell *matCellDef="let element">
+                <div *ngIf="element.times[1] == undefined">
+                  N/A
+                </div>
+                <div *ngFor="let time of element.times[1] | keyvalue">
+                  {{ time.key }}
+                </div>
+              </td>
+            </ng-container>
+            <ng-container matColumnDef="wednesday">
+              <th mat-header-cell *matHeaderCellDef>Wednesday Times</th>
+              <td mat-cell *matCellDef="let element">
+                <div *ngIf="element.times[2] == undefined">
+                  N/A
+                </div>
+                <div *ngFor="let time of element.times[2] | keyvalue">
+                  {{ time.key }}
+                </div>
+              </td>
+            </ng-container>
+            <ng-container matColumnDef="thursday">
+              <th mat-header-cell *matHeaderCellDef>Thursday Times</th>
+              <td mat-cell *matCellDef="let element">
+                <div *ngIf="element.times[3] == undefined">
+                  N/A
+                </div>
+                <div *ngFor="let time of element.times[3] | keyvalue">
+                  {{ time.key }}
+                </div>
+              </td>
+            </ng-container>
+            <ng-container matColumnDef="friday">
+              <th mat-header-cell *matHeaderCellDef>Friday Times</th>
+              <td mat-cell *matCellDef="let element">
+                <div *ngIf="element.times[4] == undefined">
+                  N/A
+                </div>
+                <div *ngFor="let time of element.times[4] | keyvalue">
+                  {{ time.key }}
+                </div>
+              </td>
+            </ng-container>
+
+            <!-- Symbol Column -->
+            <ng-container matColumnDef="subjects">
+              <th mat-header-cell *matHeaderCellDef>Subjects</th>
+              <td mat-cell *matCellDef="let element">
+                <div *ngFor="let subject of element.subjects">
+                  {{ subject }}
+                </div>
+              </td>
+            </ng-container>
+
+            <ng-container matColumnDef="students">
+              <th mat-header-cell *matHeaderCellDef>Students</th>
+              <td mat-cell *matCellDef="let element">
+                <div *ngFor="let student of element.students">
+                  <div>
+                    {{ student }}
+                  </div>
+                </div>
+              </td>
+            </ng-container>
+
+            <tr mat-header-row *matHeaderRowDef="displayedMentorColumns"></tr>
+            <tr mat-row *matRowDef="let row; columns: displayedMentorColumns;"></tr>
+          </table>
+        </div>
+        <div *ngSwitchCase=true [ngSwitch]="selected">
+          <div *ngSwitchCase=0>
+            <table mat-table [dataSource]="studentsTableData" class="mat-elevation-z8">
+
+              <!--- Note that these columns can be defined in any order.
                                   The actual rendered columns are set as a property on the row definition" -->
-                                  <ng-container matColumnDef="status">
-                                    <th mat-header-cell *matHeaderCellDef>Paired</th>
-                                    <td mat-cell *matCellDef="let element">
-                                        <mat-icon *ngIf="element.status; else elseBlock" style="color: green;">check_circle</mat-icon>
-                                        <ng-template #elseBlock>
-                                            <mat-icon style="color: red;">cancel</mat-icon>
-                                        </ng-template>
-                                    </td>
-                                  </ng-container>
-                            <!-- Position Column -->
-                            <ng-container matColumnDef="name">
-                              <th mat-header-cell *matHeaderCellDef>Name</th>
-                              <td mat-cell *matCellDef="let element"> {{element.name}} </td>
-                            </ng-container>
-                          
-                            <!-- Name Column -->
-                            <ng-container matColumnDef="daysAvailable">
-                              <th mat-header-cell *matHeaderCellDef>Days Available</th>
-                              <td mat-cell *matCellDef="let element">
-                                  <div *ngFor="let day of element.daysAvailable">
-                                    {{ day }}
-                                  </div>
-                              </td>
-                            </ng-container>
-                          
-                            <!-- Weight Column -->
-                            <ng-container matColumnDef="timesAvailable">
-                              <th mat-header-cell *matHeaderCellDef>Times Available</th>
-                              <td mat-cell *matCellDef="let element">
-                                <div *ngFor="let time of element.timesAvailable">
-                                    {{ time }}
-                                  </div>
-                              </td>
-                            </ng-container>
-                          
-                            <!-- Symbol Column -->
-                            <ng-container matColumnDef="subject">
-                              <th mat-header-cell *matHeaderCellDef>Subjects</th>
-                              <td mat-cell *matCellDef="let element">
-                                <div *ngFor="let subject of element.subjects">
-                                    {{ subject }}
-                                  </div>
-                              </td>
-                            </ng-container>
-            
-                            <ng-container matColumnDef="email">
-                                <th mat-header-cell *matHeaderCellDef>Email</th>
-                                <td mat-cell *matCellDef="let element"> {{element.email}} </td>
-                              </ng-container>
-    
-                              <ng-container matColumnDef="mentor">
-                                <th mat-header-cell *matHeaderCellDef>Mentor</th>
-                                <td mat-cell *matCellDef="let element"> {{element.mentor}} </td>
-                              </ng-container>
-                          
-                            <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
-                            <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
-                          </table>
-                    </div>
-                </div>
-            </div>
-            
-        </mat-drawer-content>
-    </mat-drawer-container>
+              <ng-container matColumnDef="status">
+                <th mat-header-cell *matHeaderCellDef>Paired</th>
+                <td mat-cell *matCellDef="let element">
+                  <mat-icon *ngIf="element.status; else elseBlock" style="color: green;">check_circle</mat-icon>
+                  <ng-template #elseBlock>
+                    <mat-icon style="color: red;">cancel</mat-icon>
+                  </ng-template>
+                </td>
+              </ng-container>
+              <!-- Position Column -->
+              <ng-container matColumnDef="name">
+                <th mat-header-cell *matHeaderCellDef>Name</th>
+                <td mat-cell *matCellDef="let element"> {{element.name}} </td>
+              </ng-container>
+
+              <!-- Name Column -->
+              <ng-container matColumnDef="daysAvailable">
+                <th mat-header-cell *matHeaderCellDef>Days Available</th>
+                <td mat-cell *matCellDef="let element">
+                  <div *ngFor="let day of element.daysAvailable">
+                    {{ day }}
+                  </div>
+                </td>
+              </ng-container>
+
+              <!-- Weight Column -->
+              <ng-container matColumnDef="timesAvailable">
+                <th mat-header-cell *matHeaderCellDef>Times Available</th>
+                <td mat-cell *matCellDef="let element">
+                  <div *ngFor="let time of element.timesAvailable">
+                    {{ time }}
+                  </div>
+                </td>
+              </ng-container>
+
+              <!-- Symbol Column -->
+              <ng-container matColumnDef="subject">
+                <th mat-header-cell *matHeaderCellDef>Subjects</th>
+                <td mat-cell *matCellDef="let element">
+                  <div *ngFor="let subject of element.subjects">
+                    {{ subject }}
+                  </div>
+                </td>
+              </ng-container>
+
+              <ng-container matColumnDef="email">
+                <th mat-header-cell *matHeaderCellDef>Email</th>
+                <td mat-cell *matCellDef="let element"> {{element.email}} </td>
+              </ng-container>
+
+              <ng-container matColumnDef="mentor">
+                <th mat-header-cell *matHeaderCellDef>Mentor</th>
+                <td mat-cell *matCellDef="let element"> {{element.mentor}} </td>
+              </ng-container>
+
+              <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
+              <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
+            </table>
+          </div>
+        </div>
+      </div>
+
+    </mat-drawer-content>
+  </mat-drawer-container>
 </div>

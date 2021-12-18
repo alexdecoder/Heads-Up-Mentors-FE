@@ -41,6 +41,8 @@ export class DashboardComponent implements OnInit {
     );
   }
 
+  downloadURL: string = environment.API_URL == "/api" ? "localhost:3000/api/export_csv" : environment.API_URL + "/api/export_csv";
+
   goToLink(url: string) {
     window.open(url);
   }
@@ -56,7 +58,7 @@ export class DashboardComponent implements OnInit {
       upload.subscribe();
     }
 
-    alert('CSV file is being uploaded. Do not navigate off this page until values propogate.');
+    location.reload();
   }
 
   onMentorUpload(event: any) {
@@ -70,7 +72,7 @@ export class DashboardComponent implements OnInit {
       upload.subscribe();
     }
 
-    alert('CSV file is being uploaded. Do not navigate off this page until values propogate.');
+    location.reload();
   }
 
   selected = 0;

@@ -1,5 +1,6 @@
 import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
+import { environment } from 'src/environments/environment';
 
 export interface ApiResponse {
   result: string,
@@ -16,9 +17,9 @@ export interface RespType {
 })
 export class HttpServiceService {
 
-  constructor(private http:HttpClient) { }
+  constructor(private http: HttpClient) { }
 
   loadInitialData() {
-    return this.http.get<ApiResponse>('/api/api/index');
+    return this.http.get<ApiResponse>(environment.API_URL + '/api/index');
   }
 }

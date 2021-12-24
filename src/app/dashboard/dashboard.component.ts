@@ -55,10 +55,12 @@ export class DashboardComponent implements OnInit {
       formData.append("csv", file);
 
       const upload = this.http.post(environment.API_URL + "/api/csv_actions?a=import", formData);
-      upload.subscribe();
+      upload.subscribe({
+        next() {
+          location.reload();
+        }
+      });
     }
-
-    alert('Please reload the page')
   }
 
   onMentorUpload(event: any) {
@@ -69,10 +71,12 @@ export class DashboardComponent implements OnInit {
       formData.append("csv", file);
 
       const upload = this.http.post(environment.API_URL + "/api/csv_actions?a=importmentors", formData);
-      upload.subscribe();
+      upload.subscribe({
+        next() {
+          location.reload();
+        }
+      });
     }
-
-    alert('Please reload the page')
   }
 
   selected = 0;

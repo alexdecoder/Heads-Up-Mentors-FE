@@ -43,6 +43,9 @@ table {
 }
 
 @media screen and (max-width: 800px) {
+    html {
+        overflow: hidden;
+    }
     .mobileoverlay {
         position: absolute;
         width: 100%;
@@ -68,9 +71,5 @@ table {
 
             margin-bottom: 1em;
         }
-    }
-
-    html, body {
-        overflow: hidden;
     }
 }

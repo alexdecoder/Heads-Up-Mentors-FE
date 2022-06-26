@@ -1,0 +1,42 @@
+<input type="file" #studentsUpload accept=".tsv" (change)="fileUploadChange($event)">
+<app-dashboard-template [selectedTab]="0">
+    <app-actionbar>
+        <button mat-flat-button color="accent" (click)="studentsUpload.click()">Import Students .TSV File</button>
+    </app-actionbar>
+    <app-table *ngIf="((peopleState$ | async)!.students ?? []).length > 0 || (appState$ | async)!.isLoading; else noAdmins">
+        <tr>
+            <td>Status</td>
+            <td>Name</td>
+            <td>Email</td>
+            <td>Mon</td>
+            <td>Tues</td>
+            <td>Wed</td>
+            <td>Thrs</td>
+            <td>Fri</td>
+            <td>Subject(s)</td>
+            <td>Mentor</td>
+        </tr>
+        <tr *ngFor="let student of (peopleState$ | async)!.students">
+            <td>{{ student.status }}</td>
+            <td>{{ student.name }}</td>
+            <td>{{ student.email }}</td>
+            <td>{{ student.monday }}</td>
+            <td>{{ student.tuesday }}</td>
+            <td>{{ student.wednesday }}</td>
+            <td>{{ student.thursday }}</td>
+            <td>{{ student.friday }}</td>
+            <td>{{ student.subjects }}</td>
+            <td>{{ student.mentor.name }}</td>
+        </tr>
+    </app-table>
+    <ng-template #noAdmins>
+        <div class="emptydialog">
+            <h2>
+                No students found
+            </h2>
+            <p>
+                To get started, import a valid .TSV (Tab-Seperated Values) file. These files can be generated from Google Sheets or by Microsoft Excel
+            </p>
+        </div>
+    </ng-template>
+</app-dashboard-template>

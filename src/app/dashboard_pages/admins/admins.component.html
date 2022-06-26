@@ -1,0 +1,33 @@
+<app-dashboard-template [selectedTab]="2">
+    <app-actionbar>
+        <button mat-flat-button color="accent" (click)="generateSignupCode()">Create Invite Link</button>
+    </app-actionbar>
+    <app-table *ngIf="((peopleState$ | async)!.admins ?? []).length > 0 || (appState$ | async)!.isLoading; else noAdmins">
+        <tr>
+            <td>Name</td>
+            <td>Email</td>
+            <td>View Only</td>
+            <td>Delete User</td>
+        </tr>
+        <tr *ngFor="let admin of (peopleState$ | async)!.admins">
+            <td>{{ admin.name }}</td>
+            <td>{{ admin.email }}</td>
+            <td>
+                <mat-slide-toggle color="primary" [checked]="admin.isViewOnly" (toggleChange)="switchToggled(admin.uuid)"></mat-slide-toggle>
+            </td>
+            <td>
+                <button mat-flat-button color="warn" (click)="deleteAdmin(admin.uuid)">Delete</button>
+            </td>
+        </tr>
+    </app-table>
+    <ng-template #noAdmins>
+        <div class="emptydialog">
+            <h2>
+                Woah, there's nobody else!
+            </h2>
+            <p>
+                Click "Create Invite Link" to start sharing!
+            </p>
+        </div>
+    </ng-template>
+</app-dashboard-template>

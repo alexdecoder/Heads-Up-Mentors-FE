@@ -1,0 +1,3 @@
+<div [ngStyle]="{'display': !(appState$ | async)!.hasLoaded || (appState$ | async)!.isViewOnly ? 'none' : 'block'}">
+    <ng-content></ng-content>
+</div>

@@ -1,0 +1,37 @@
+<app-dashboard-template [selectedTab]="1">
+    <app-actionbar>
+        <button mat-flat-button color="accent">Import Mentors .TSV File</button>
+    </app-actionbar>
+    <app-table *ngIf="((peopleState$ | async)!.mentors ?? []).length > 0 || (appState$ | async)!.isLoading; else noAdmins">
+        <tr>
+            <td>Name</td>
+            <td>Mon</td>
+            <td>Tues</td>
+            <td>Wed</td>
+            <td>Thrs</td>
+            <td>Fri</td>
+            <td>Subject(s)</td>
+            <td>Students</td>
+        </tr>
+        <tr *ngFor="let mentor of (peopleState$ | async)!.mentors">
+            <td>{{ mentor.name }}</td>
+            <td>{{ mentor.monday }}</td>
+            <td>{{ mentor.tuesday }}</td>
+            <td>{{ mentor.wednesday }}</td>
+            <td>{{ mentor.thursday }}</td>
+            <td>{{ mentor.friday }}</td>
+            <td>{{ mentor.subjects }}</td>
+            <td>{{ mentor.students }}</td>
+        </tr>
+    </app-table>
+    <ng-template #noAdmins>
+        <div class="emptydialog">
+            <h2>
+                No mentors found
+            </h2>
+            <p>
+                To get started, import a valid .TSV (Tab-Seperated Values) file. These files can be generated from Google Sheets or by Microsoft Excel
+            </p>
+        </div>
+    </ng-template>
+</app-dashboard-template>

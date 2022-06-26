@@ -1,0 +1,34 @@
+:host {
+    display: flex;
+    align-items: center;
+
+    padding: 1em 2em;
+    background-color: #242424;
+}
+
+h1 {
+    margin-right: auto;
+    margin-bottom: 0;
+}
+
+p {
+    margin-bottom: 0;
+    margin-right: 2em;
+
+    opacity: .7;
+}
+
+div {
+    background-color: transparentize($color: #f44336, $amount: .7);
+    color: #f44336;
+
+    padding: .25em 1em;
+
+    margin-right: 3em;
+
+    border-radius: 1em;
+}
+
+mat-progress-spinner {
+    margin-right: 3em;
+}

@@ -1,0 +1,34 @@
+tr:first-child {
+    text-align: center;
+    font-weight: 500;
+}
+tr {
+    td:first-child {
+        padding-left: 1em;
+    }
+    td:last-child {
+        padding-right: 1em;
+    }
+}
+td {
+    padding: .5em 0;
+
+    border: none;
+}
+tr:nth-child(even) {
+    background-color: #242424;
+}
+
+.emptydialog {
+    text-align: center;
+
+    margin-top: 2em;
+
+    h2 {
+        opacity: .7;
+    }
+
+    p {
+        opacity: .5;
+    }
+}

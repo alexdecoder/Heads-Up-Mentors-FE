@@ -1,0 +1,66 @@
+:host {
+    background-color: #191919;
+
+    display: inline-flex;
+    flex-direction: column;
+
+    height: 100%;
+
+    padding: 0 1.5em;
+}
+
+button {
+    border: none;
+    outline: none;
+
+    cursor: pointer;
+
+    background-color: transparent;
+
+    display: inline-flex;
+    align-items: center;
+
+    margin-top: 1.5em;
+
+    font-size: 115%;
+
+    color: rgba(255, 255, 255, 0.7);
+
+    padding: .5em 1.5em;
+
+    border-radius: 5px;
+
+    mat-icon {
+        margin-right: 1em;
+    }
+
+    p {
+        font-weight: 500;
+        font-family: Roboto, "Helvetica Neue", sans-serif;
+
+        margin-bottom: 0;
+    }
+}
+
+.selected {
+    color: #2196f3;
+
+    background-color: #2195f336;
+}
+
+.credits {
+    margin-top: auto;
+
+    text-align: center;
+
+    margin-bottom: 1em;
+
+    p:first-child {
+        opacity: .7;
+        font-weight: 300;
+        font-size: 90%;
+    }
+    p:last-child {
+        font-weight: 500;
+    }
+}

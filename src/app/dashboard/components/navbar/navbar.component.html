@@ -1,0 +1,7 @@
+<h1>Heads Up Mentors</h1>
+<div [ngStyle]="{'display': (appState$ | async)!.isViewOnly ? 'block' : 'none'}">
+    View Only
+</div>
+<mat-progress-spinner [ngStyle]="{'visibility': (appState$ | async)!.isLoading ? 'visible' : 'hidden'}" mode="indeterminate" diameter="40"></mat-progress-spinner>
+<p>V2.0.0</p>
+<button mat-flat-button color="warn" (click)="signOut()">Sign Out</button>

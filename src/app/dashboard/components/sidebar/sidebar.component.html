@@ -1,0 +1,18 @@
+<button [ngClass]="{'selected': index == 0}" routerLink="/">
+    <mat-icon>school</mat-icon>
+    <p>Students</p>
+</button>
+<button [ngClass]="{'selected': index == 1}" routerLink="/mentors">
+    <mat-icon>auto_stories</mat-icon>
+    <p>Mentors</p>
+</button>
+<button [ngClass]="{'selected': index == 2}" routerLink="/admins" [ngStyle]="{'display': !(appState$ | async)!.hasLoaded || (appState$ | async)!.isViewOnly ? 'none' : 'flex'}">
+    <mat-icon>admin_panel_settings</mat-icon>
+    <p>Administrators</p>
+</button>
+<div class="credits">
+    <p>
+        Maintained by
+    </p>
+    <p>Alex Rankin</p>
+</div>

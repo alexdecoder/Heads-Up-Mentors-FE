@@ -1,0 +1,24 @@
+<h1>Heads Up Mentors</h1>
+<div class="content">
+    <h2>
+        Hello, Administrator!
+    </h2>
+    <div class="fields">
+        <mat-progress-bar mode="indeterminate" [ngClass]="{'showprogressbar': (appState$ | async)!.isLoading}"></mat-progress-bar>
+        <form [formGroup]="loginForm">
+            <mat-form-field appearance="outline">
+                <mat-label>Email</mat-label>
+                <input matInput placeholder="Email" formControlName="email">
+            </mat-form-field>
+            <mat-form-field appearance="outline">
+                <mat-label>Password</mat-label>
+                <input matInput placeholder="Password" type="password" formControlName="password">
+            </mat-form-field>
+        </form>
+        <button mat-flat-button color="primary" (click)="submit()">Login</button>
+    </div>
+    <div class="notice">
+        <mat-icon>warning_amber</mat-icon>
+        <p>This system is for Heads Up Mentors' administrators. If you are a mentor or a student, please navigate away from this page.</p>
+    </div>
+</div>

@@ -1,0 +1,7 @@
+<app-navbar></app-navbar>
+<div class="dashboardcontent">
+    <app-sidebar [index]="selectedTab"></app-sidebar>
+    <div class="dashboardcontent-outlet">
+        <ng-content></ng-content>
+    </div>
+</div>

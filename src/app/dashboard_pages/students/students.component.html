@@ -1,4 +1,4 @@
-<input type="file" #studentsUpload accept=".tsv" (change)="fileUploadChange($event)">
+<input type="file" #studentsUpload accept=".tsv" (change)="fileUploadChange($event)" #uploadInput>
 <app-dashboard-template [selectedTab]="0">
     <app-actionbar>
         <button mat-flat-button color="accent" (click)="studentsUpload.click()">Import Students .TSV File</button>
@@ -20,12 +20,36 @@
             <td>{{ student.status }}</td>
             <td>{{ student.name }}</td>
             <td>{{ student.email }}</td>
-            <td>{{ student.monday }}</td>
-            <td>{{ student.tuesday }}</td>
-            <td>{{ student.wednesday }}</td>
-            <td>{{ student.thursday }}</td>
-            <td>{{ student.friday }}</td>
-            <td>{{ student.subjects }}</td>
+            <td>
+                <div *ngFor="let v of student.monday">
+                    {{ v }}
+                </div>
+            </td>
+            <td>
+                <div *ngFor="let v of student.tuesday">
+                    {{ v }}
+                </div>
+            </td>
+            <td>
+                <div *ngFor="let v of student.wednesday">
+                    {{ v }}
+                </div>
+            </td>
+            <td>
+                <div *ngFor="let v of student.thursday">
+                    {{ v }}
+                </div>
+            </td>
+            <td>
+                <div *ngFor="let v of student.friday">
+                    {{ v }}
+                </div>
+            </td>
+            <td>
+                <div *ngFor="let v of student.subjects">
+                    {{ v }}
+                </div>
+            </td>
             <td>{{ student.mentor.name }}</td>
         </tr>
     </app-table>

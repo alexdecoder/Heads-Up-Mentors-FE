@@ -1,4 +1,4 @@
-import { HttpClient } from "@angular/common/http";
+import { HttpClient, HttpContext, HttpContextToken } from "@angular/common/http";
 import { Injectable } from "@angular/core";
 import { Observable } from "rxjs";
 import { environment } from "src/environments/environment";
@@ -47,22 +47,31 @@ export class AppService {
         });
     }
 
-    fileUpload(variant: 'STUDENT' | 'MENTOR', formData: FormData): Promise<any> {
+    async fileUpload(variant: 'STUDENT' | 'MENTOR', formData: FormData): Promise<FileUploadResult> {
         let url = environment.host + '/api/upload/';
         if(variant === 'STUDENT') {
-            url += 'mentor/';
-        } else {
             url += 'student/';
+        } else {
+            url += 'mentor/';
         }
 
-        return new Promise<SignupCodeResult>((resolve, _) => {
-            this.http.post(url, formData).subscribe({
-                next: (v) => resolve({success: true, code: (v as any).code}),
-                error: (_) => resolve({success: false})
+        return new Promise<FileUploadResult>((resolve, _) => {
+            this.http.post(url, formData, {
+                context: new HttpContext().set(SHOULD_OVERRIDE_CONTENT_TYPE, true)
+            }).subscribe({
+                next: (_) => resolve({success: true}),
+                error: (v) => {
+                    if(v.status === 400) {
+                        resolve({success: false, error: v.error.message});
+                    }
+                    return resolve({success: false});
+                }
             });
         });
     }
 }
+
+export const SHOULD_OVERRIDE_CONTENT_TYPE = new HttpContextToken<boolean>(() => false);
 
 export interface SignupCodeResult {
     success: boolean,
@@ -72,5 +81,4 @@ export interface SignupCodeResult {
 export interface FileUploadResult {
     success: boolean,
     error?: string | null,
-    
 }

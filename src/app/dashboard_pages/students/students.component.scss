@@ -9,11 +9,17 @@ tr {
     td:last-child {
         padding-right: 1em;
     }
+
+    white-space: nowrap;
 }
 td {
-    padding: .5em 0;
+    padding: .5em;
 
     border: none;
+    
+    div {
+        text-align: center;
+    }
 }
 tr:nth-child(even) {
     background-color: #242424;
